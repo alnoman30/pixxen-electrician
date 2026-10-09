@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ============ Hero section animation ============
+// ============ electrician Hero section animation ============
 document.addEventListener('DOMContentLoaded', () => {
   const q = (s) => document.querySelector(s);
 

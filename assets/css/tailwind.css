@@ -860,3 +860,49 @@ html.lenis body {
     transition: none;
   }
 }
+
+.electrician-faq-question-btn {
+  cursor: pointer;
+}
+
+/* Keep button background color matching the answer box (#304D36) when the item is open */
+
+.electrician-faq-item.is-open .electrician-faq-question-text {
+  color: #E3762B;
+}
+
+/* Icon transition states */
+.electrician-faq-plus-icon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.electrician-faq-minus-icon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.8);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.electrician-faq-item.is-open .electrician-faq-plus-icon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.8);
+}
+
+.electrician-faq-item.is-open .electrician-faq-minus-icon {
+  opacity: 1;
+  transform: rotate(135deg) scale(1);
+}
+
+/* Accordion grid animation */
+.electrician-faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+.electrician-faq-item.is-open .electrician-faq-answer {
+  grid-template-rows: 1fr;
+}
+.electrician-faq-answer-inner {
+  overflow: hidden;
+}

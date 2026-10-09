@@ -250,11 +250,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!headings.length) return;
 
   // ---- tweak these ----
-  const FROM_X = 60;       // px each letter starts to the right (use -60 for left)
+  const FROM_Y = 170;      // % of the line height each letter starts below its line
+                           // (keep it high enough that the blur halo starts fully hidden)
   const BLUR = 10;         // starting blur in px
   const DURATION = 1;      // seconds per letter
   const STAGGER = 0.03;    // gap between letters
-  const START = 'top 90%'; // a heading already on screen plays right away on load
+  const START = 'top 100%'; // a heading already on screen plays right away on load
   // ---------------------
 
   const mm = gsap.matchMedia();
@@ -281,19 +282,20 @@ document.addEventListener('DOMContentLoaded', () => {
               heading.style.textTransform = 'none';
             }
 
-            // words stay intact so nothing breaks across lines mid-word
-            const split = SplitText.create(heading, { type: 'chars,words' });
+            // each line becomes a clipping mask; letters rise up into view from behind it
+            const split = SplitText.create(heading, {
+              type: 'lines,words,chars',
+              mask: 'lines',
+            });
 
             gsap.set(split.chars, {
-              opacity: 0,
-              x: FROM_X,
+              yPercent: FROM_Y,
               filter: `blur(${BLUR}px)`,
             });
             gsap.set(heading, { visibility: 'visible' });
 
             gsap.to(split.chars, {
-              opacity: 1,
-              x: 0,
+              yPercent: 0,
               filter: 'blur(0px)',
               duration: DURATION,
               ease: 'power4.out',
@@ -414,3 +416,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   cards.forEach((card) => observer.observe(card));
 });
+
+// electrician FAQ 
+document.querySelectorAll('.electrician-faq-item').forEach((item) => {
+  const btn = item.querySelector('.electrician-faq-question-btn');
+  btn.addEventListener('click', () => {
+    const isOpen = item.classList.contains('is-open');
+
+    // Close all other items (accordion behavior)
+    document.querySelectorAll('.electrician-faq-item.is-open').forEach((openItem) => {
+      if (openItem !== item) {
+        openItem.classList.remove('is-open');
+        openItem.querySelector('.electrician-faq-question-btn').setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    item.classList.toggle('is-open', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  });
+});
+
+// 

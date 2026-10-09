@@ -1,2 +1,2 @@
 # Pixxen Electrician Service
-![Homepage](previews/preview.png)
+![Homepage](previews/previews.png)
